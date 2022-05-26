@@ -30,8 +30,12 @@ uno mediante el simbolo &.
 
 // const axios = require('axios');   //usando Nodejs
 
+//import 
+import ApiKey from './key.js';
+let key = new ApiKey();
+key = key.apiKey();
+
 // DOM
-const imagesContainer = document.getElementById('imagesContainer');
 const button_1 = document.getElementById('button_1');
 const button_2 = document.getElementById('button_2');
 
@@ -84,7 +88,7 @@ button_1.onclick = () => {
     const endpoint = "https://api.thecatapi.com/v1/images/search";
     const parameters = [
         `?limit=${numberLimit}`,
-        '&order=Desc',
+        `&api_key=${key}`,
     ].join('');
     const URL = [endpoint,parameters].join('') ;
     //llamar funcion
