@@ -29,28 +29,60 @@ uno mediante el simbolo &.
 
 
 // const axios = require('axios');   //usando Nodejs
-const endpoint = "https://api.thecatapi.com/v1/images/search";
-const parameters = [
-    '?limit=3',
-    '&order=Desc',
-].join('');
-const URL = [endpoint,parameters].join('') ;
-console.log(URL);
 
-const button = document.getElementById('button');
+// DOM
+const imagesContainer = document.getElementById('imagesContainer');
+const button_1 = document.getElementById('button_1');
+const button_2 = document.getElementById('button_2');
 
-const apiCat = async () =>{
+//numbers
+const number = () =>{
+    let numberImages = document.getElementById('numberImages').value;
+    numberImages = Number(numberImages);
+    return numberImages
+};
+
+//APi axios
+const apiCat = async (i,URL) =>{
     try {
         const resImg = await axios(URL);
-        const imgUrl = resImg.data[0].url;
+        const imgUrl = resImg.data[i-1].url;
 
-        const container = document.getElementById("img");
+        const container = document.getElementById(`img${i}`);
         container.src = imgUrl;
     } catch(error){
         console.log(error);
     }
 }
+//IMAG GENERATOR
+const imgGenerator = (num,URL) =>{
+    let i = 0;
+    let html = '';
+    for ( i = 1; i <= num; i++) {
+        html += `<img alt="Cat random Picture" id="img${i}">`;
+        console.log(html);
+    }
+    const container = document.getElementById("imagesContainer");
+    container.innerHTML = html;
+    for (i = 1; i <= num; i++){
+        apiCat(i,URL);
+    }
+}
+// onclick
+button_1.onclick = () => {;
+    const numberLimit = number() ;
+    //url
+    const endpoint = "https://api.thecatapi.com/v1/images/search";
+    const parameters = [
+        `?limit=${numberLimit}`,
+        '&order=Desc',
+    ].join('');
+    const URL = [endpoint,parameters].join('') ;
 
-apiCat();
+    if(numberLimit !== 0){
+        imgGenerator(numberLimit,URL);
+    }else{
+        alert("Elija un numero mayor a cero");
+    };
+}
 
-button.onclick = () => apiCat();
