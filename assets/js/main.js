@@ -68,8 +68,16 @@ const imgGenerator = (num,URL) =>{
         apiCat(i,URL);
     }
 }
+const conditional = (num, URL) => {
+    if(num !== 0){
+        imgGenerator(num,URL);
+    }else{
+        alert("Choose a number greater than zero");
+    };
+}
+
 // onclick
-button_1.onclick = () => {;
+button_1.onclick = () => {
     const numberLimit = number() ;
     //url
     const endpoint = "https://api.thecatapi.com/v1/images/search";
@@ -78,11 +86,10 @@ button_1.onclick = () => {;
         '&order=Desc',
     ].join('');
     const URL = [endpoint,parameters].join('') ;
-
-    if(numberLimit !== 0){
-        imgGenerator(numberLimit,URL);
-    }else{
-        alert("Elija un numero mayor a cero");
-    };
+    conditional(numberLimit,URL);
+    button_2.onclick = (URL)=>{
+        imgGenerator(0,URL);
+        numberImages.value = "0";
+    }
 }
 
