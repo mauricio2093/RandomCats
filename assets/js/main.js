@@ -78,6 +78,7 @@ const conditional = (num, URL) => {
 
 // onclick
 button_1.onclick = () => {
+    //numero de busqueda
     const numberLimit = number() ;
     //url
     const endpoint = "https://api.thecatapi.com/v1/images/search";
@@ -86,7 +87,9 @@ button_1.onclick = () => {
         '&order=Desc',
     ].join('');
     const URL = [endpoint,parameters].join('') ;
+    //llamar funcion
     conditional(numberLimit,URL);
+    //reset
     button_2.onclick = (URL)=>{
         imgGenerator(0,URL);
         numberImages.value = "0";
