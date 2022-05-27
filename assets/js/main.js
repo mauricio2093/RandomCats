@@ -56,14 +56,15 @@ const apiCat = async (i,URL) =>{
         container.src = imgUrl;
     } catch(error){
         console.log(error);
-    }
+    } 
 }
 //IMAG GENERATOR
 const imgGenerator = (num,URL) =>{
     let i = 0;
     let html = '';
     for ( i = 1; i <= num; i++) {
-        html += `<img alt="Cat random Picture" id="img${i}">`;
+        html += `<img alt="Cat random Picture" class="imagesCat" id="img${i}">
+        <button type="button" class="favoriteButton" onclick="colorChange(${i})"><i style="color:black;" class="ri-star-fill color-star" id="color_star${i}"></i></button>`;
         console.log(html);
     }
     const container = document.getElementById("imagesContainer");
@@ -82,6 +83,7 @@ const conditional = (num, URL) => {
 
 // onclick
 button_1.onclick = () => {
+    //DOM
     //numero de busqueda
     const numberLimit = number() ;
     //url

@@ -7,23 +7,30 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Square+Peg&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <title>Random Cats with API REST</title>
 </head>
 <body>
     <header>
         <h1>Random Cats</h1>
     </header>
-    <section class="container">
-        <div id="imagesContainer"></div>
-        <div class="inputContainer">
-            <label for="numberImages">Enter the number of images you want to see</label>
-            <input type="number" id="numberImages" value="0">
-            <button type="button" class="random-cat-button" id="button_1"> Show me a cat!</button>
-            <button type="reset" class="random-cat-button" id="button_2"> Resest</button>
-        </div>
-        
-    </section>
+    <main>
+        <section class="container">
+            <div id="imagesContainer" class="imagesContainer"></div>
+            <div class="inputContainer">
+                <label for="numberImages">Enter the number of images you want to see</label>
+                <input type="number" id="number_images" value="0">
+                <button type="button" class="random-cat-button" id="button_1"> Show me a cat!</button>
+                <button type="reset" class="random-cat-button" id="button_2"> Resest</button>
+            </div>
+        </section>
+        <section class="container">
+            <h1>Favorites Cats</h1>
+        </section>
+        <span id="error" style="font-size: 50px;"></span>
+    </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js" integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script type="module" src="./assets/js/main.js"></script>
+    <!-- <script type="module" src="./assets/js/main.js"></script> -->
+    <script type="module" src="./assets/js/app.js"></script>
 </body>
 </html>

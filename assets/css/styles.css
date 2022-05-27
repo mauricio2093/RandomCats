@@ -23,9 +23,9 @@ h1 {
     place-items: center;
     padding: 10px;
 }
-.container img {
+.container .imagesCat {
     border-radius: 20px;
-    margin: 20px;
+    margin: 0% 0% 2% 0%; 
     width: 30%;
 }
 .inputContainer{
@@ -62,4 +62,29 @@ label{
     color: black;
     border: 5px solid rgb(85, 83, 200);
     background-color: rgb(96, 94, 228);
+}
+.imagesContainer{
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+.imagesCat{
+    flex: none;
+}
+.favoriteButton{
+    position: relative;
+    top: 8px;
+    right: 30px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(250, 250, 250, 0.3);
+    border: none;
+    border-radius: 50%;
+} 
+
+.favoriteButton:hover{
+    border:solid 2px black;
 }
