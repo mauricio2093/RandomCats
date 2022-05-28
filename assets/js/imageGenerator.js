@@ -6,15 +6,24 @@ class ImgGenerator{
     }
      //IMAG GENERATOR
     imgGenerator(){
-        let i = 0;
         let html = '';
-        for ( i = 1; i <= this.num; i++) {
+        for ( let i = 1; i <= this.num; i++) {
             html += `<img alt="Cat random Picture" class="imagesCat" id="img${i}">
                     <button type="button" class="favoriteButton" onclick="colorChange(${i});saveFav(${i});"><i style="color:black;" class="ri-star-fill color-star" id="color_star${i}"></i></button>`;
-            console.log(html);
         }
         return html
     }
+    imgFav(){
+        let html = '';
+        for (let i = 1; i <= this.num; i++) {
+            html  += `<img alt="Cat random Picture" class="imagesCat" id="imgFav${i}">
+                <button type="reset" class="favoriteButton" onclick="delete(${i})"><i style="color:black;" class="ri-star-fill color-star" id="color_star${i}"></i></button>`;
+            const container = document.getElementById("imagesContainer_1");
+            container.innerHTML = html;
+        }
+        return html
+    }
+    // Call
     callApi(){
         //URL
         const endpoint = `https://api.thecatapi.com/v1/${this.endPoint}`;
@@ -33,5 +42,6 @@ class ImgGenerator{
         const URL = [endpoint,parameters].join('') ;
         return URL
     }
+    
 }
 export default ImgGenerator;

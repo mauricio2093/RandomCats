@@ -23,24 +23,32 @@ class ApiCats{
     }
     
     async apiLoadFav(){
-        console.log(`URl Load : ${this.URL}`);
         try {
-            const resImg = await axios(this.URL);
-            const data = resImg.data;
-            console.log('Favorite');
-            console.log(data);
+            const resImg = await fetch(this.URL);
+            const data= await resImg.json();
+            if(this.i === 0){
+                const num = data.length;
+                return num;
+            }else{
+                const imgUrl = data[this.i-1].image.url;
+                const container = document.getElementById(`imgFav${this.i}`);  
+                container.src = imgUrl;
+            }
             const status = resImg.status;
-            if (status !== 200) throw new Error(`Error de petición HTTP en Favorite: ${status}`);
+            if (status !== 200){
+                throw new Error(`Error de petición HTTP en Favorite: ${status}`)
+            }
         } catch(error){
             console.log(error);
             console.log(error.message);
             const errorNode = document.querySelector('#error');
             errorNode.innerText = `Error: ${error.message}`;
         }
+        
+        
     }
     
     async saveApiFav(){
-        console.log(`URl save : ${this.URL}`);
         try {                        
             const rest = await fetch(this.URL,{
                     method: 'POST',
@@ -48,7 +56,7 @@ class ApiCats{
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        image_id: 'a1u'
+                        image_id: 'dpc'
                     }),
             });
             console.log(rest);

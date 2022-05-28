@@ -1,3 +1,5 @@
-/node_modules/
+/.vscode
+/node_modules
 key.js
 main.js
+favorite.js

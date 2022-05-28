@@ -20,7 +20,6 @@ const images = (num,key,endpoint) =>{
     const container = document.getElementById("imagesContainer");
     container.innerHTML = html;
     const URL = imgGen.callApi();
-    console.log(`ùrl image ${URL}`);
 
     for (let i = 1; i <= num; i++){
         const api = new ApiCats(i,URL);
@@ -29,14 +28,24 @@ const images = (num,key,endpoint) =>{
     
 }
 async function favCats(){
-    const i =1;
+    let num = 0;
     const endpoint= 'favourites';
     //call function
-    const imgGen = new ImageGenerator(i,key,endpoint);
+    let imgGen = new ImageGenerator(num,key,endpoint);
     const URL = imgGen.callApi();
-    console.log(URL);
-    const api = new ApiCats(i,URL);
-    api.apiLoadFav();
+
+    const api = new ApiCats(num,URL);
+    num = await api.apiLoadFav();
+    console.log(num);
+    imgGen = new ImageGenerator(num);
+    const html = imgGen.imgFav();
+    const container = document.getElementById("imagesContainer_1");
+    container.innerHTML = html;
+
+    for (let i = 1; i <= num; i++){
+        const api = new ApiCats(i,URL);
+        api.apiLoadFav();
+    }
 }
 favCats();
 
@@ -45,7 +54,6 @@ async function saveFav(i){
     //call function
     const imgGen = new ImageGenerator(i,key,endpoint);
     const URL = imgGen.callApi();
-    console.log(URL);
     const api = new ApiCats(i,URL);
     api.saveApiFav();
 }
