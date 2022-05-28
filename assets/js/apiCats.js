@@ -21,7 +21,9 @@ class ApiCats{
             errorNode.innerText = `Error: ${error.message}`;
         }
     }
+    
     async apiLoadFav(){
+        console.log(`URl Load : ${this.URL}`);
         try {
             const resImg = await axios(this.URL);
             const data = resImg.data;
@@ -36,19 +38,22 @@ class ApiCats{
             errorNode.innerText = `Error: ${error.message}`;
         }
     }
+    
     async saveApiFav(){
-        try {
-            const rest = await fetch(URL, {
-                method: 'POST',
-                headers:{
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    Image_id: 'dje'
-                })
+        console.log(`URl save : ${this.URL}`);
+        try {                        
+            const rest = await fetch(this.URL,{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        image_id: 'a1u'
+                    }),
             });
             console.log(rest);
-            if (rest.status !== 200) throw new Error(`Error de petición HTTP en Save: ${rest.status}`);
+            const data = rest.json();
+            if (rest.status !== 200) throw new Error(`Error de petición HTTP en Save: ${rest.status}${data.message}`);
         } catch(error){
             console.log(error);
             console.log(error.message);
