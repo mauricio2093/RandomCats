@@ -3,7 +3,7 @@ import ImageGenerator from './imageGenerator.js';
 import ApiCats from './apiCats.js';
 import ApiKey from './key.js';
 
-//call
+//call key
 let key = new ApiKey();
 key = key.apiKey();
 // DOM
@@ -20,14 +20,14 @@ const images = async (num,key,endpoint) =>{
     container.innerHTML = html;
     const URL = imgGen.callApi();
     let id = [];
-    for (let i = 0; i <= num; i++){
+    for (let i = 0; i < num; i++){
         const api = new ApiCats(i,URL);
         id[i]= await api.apiCat();
-        console.log(await api.apiCat());
     }
-    console.log(id);
+    return id;
     
 }
+
 async function favCats(){
     let num = 0;
     const endpoint= 'favourites';
@@ -45,19 +45,12 @@ async function favCats(){
     for (let i = 1; i <= num; i++){
         const api = new ApiCats(i,URL);
         api.apiLoadFav();
-    }
+    }    
+    
 }
 favCats();
 
-async function saveFav(i){
-    const id = api.apiCat();
-    endpoint= 'favourites';
-    imgGen = new ImageGenerator(i,key,endpoint);
-    URL = imgGen.callApi();
-    api = new ApiCats(id,URL);
-    api.saveApiFav();
-}
-window.saveFav = saveFav;
+
 
 function colorChange(i){
     const color_star  = document.getElementById(`color_star${i}`);
@@ -77,19 +70,35 @@ const number = () => {
     return number_images;
 }
 // onclick
-button_1.onclick = () => {
+
+button_1.onclick = async () => {
     const num = number();
     const endpoint= 'images/search';
     //validacion
     if(num !== 0){
-        images(num,key,endpoint);
+        let id = await images(num,key,endpoint);
+        console.log(id + "esto es apra divertire" + typeof(id));
+        async function saveFav (i){
+            const idImg = id[i-1];
+            const endpoint= 'favourites';
+             //call function
+            let imgGen = new ImageGenerator(i,key,endpoint);
+            const URL = imgGen.callApi();
+            const api = new ApiCats(idImg,URL);
+            await api.saveApiFav();
+            favCats();
+        }
+        window.saveFav = saveFav;
     }else{
         alert("Elija un numero mayor a cero");
     };
     button_2.onclick = ()=>{
         console.log(typeof(number_images));
         images(0,key);
+        
         number_images.value="0";
     }
     
 }
+
+
