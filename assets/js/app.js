@@ -3,7 +3,6 @@ import ImageGenerator from './imageGenerator.js';
 import ApiCats from './apiCats.js';
 import ApiKey from './key.js';
 
-
 //call
 let key = new ApiKey();
 key = key.apiKey();
@@ -13,18 +12,20 @@ const button_2 = document.getElementById('button_2');
 
 
 //functions
-const images = (num,key,endpoint) =>{
+const images = async (num,key,endpoint) =>{
     //call function
     const imgGen = new ImageGenerator(num,key,endpoint);
     const html = imgGen.imgGenerator();
     const container = document.getElementById("imagesContainer");
     container.innerHTML = html;
     const URL = imgGen.callApi();
-
-    for (let i = 1; i <= num; i++){
+    let id = [];
+    for (let i = 0; i <= num; i++){
         const api = new ApiCats(i,URL);
-        api.apiCat();
+        id[i]= await api.apiCat();
+        console.log(await api.apiCat());
     }
+    console.log(id);
     
 }
 async function favCats(){
@@ -36,7 +37,6 @@ async function favCats(){
 
     const api = new ApiCats(num,URL);
     num = await api.apiLoadFav();
-    console.log(num);
     imgGen = new ImageGenerator(num);
     const html = imgGen.imgFav();
     const container = document.getElementById("imagesContainer_1");
@@ -50,11 +50,11 @@ async function favCats(){
 favCats();
 
 async function saveFav(i){
-    const endpoint= 'favourites';
-    //call function
-    const imgGen = new ImageGenerator(i,key,endpoint);
-    const URL = imgGen.callApi();
-    const api = new ApiCats(i,URL);
+    const id = api.apiCat();
+    endpoint= 'favourites';
+    imgGen = new ImageGenerator(i,key,endpoint);
+    URL = imgGen.callApi();
+    api = new ApiCats(id,URL);
     api.saveApiFav();
 }
 window.saveFav = saveFav;

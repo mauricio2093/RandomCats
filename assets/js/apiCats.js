@@ -7,25 +7,33 @@ class ApiCats{
     async apiCat(){
         try {
             const resImg = await axios(this.URL);
-            const imgUrl = resImg.data[this.i-1].url;
-            const container = document.getElementById(`img${this.i}`);
+            const data = await resImg.data[this.i];
+            const imgUrl =  data.url;
+            const imgId =  data.id;
+            console.log(imgId);
+            const container = document.getElementById(`img${this.i+1}`);
             container.src = imgUrl;
-            console.log('Random');
-            console.log(resImg);
             const status = resImg.status;
-            if (status !== 200) throw new Error(`Error de petición HTTP en Random: ${status}`);
+            if (status !== 200){
+                throw new Error(`Error de petición HTTP en Random: ${status}`)
+            }else{
+                return imgId
+            };
         } catch(error){
             console.log(error);
             console.log(error.message);
             const errorNode = document.querySelector('#error');
             errorNode.innerText = `Error: ${error.message}`;
         }
+        return imgId
     }
     
     async apiLoadFav(){
+        
         try {
             const resImg = await fetch(this.URL);
             const data= await resImg.json();
+            console.log(resImg.data);
             if(this.i === 0){
                 const num = data.length;
                 return num;
@@ -49,14 +57,15 @@ class ApiCats{
     }
     
     async saveApiFav(){
-        try {                        
+        try {             
+            console.log(this.i);           
             const rest = await fetch(this.URL,{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        image_id: 'dpc'
+                        image_id: `${this.i}`
                     }),
             });
             console.log(rest);
