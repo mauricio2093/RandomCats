@@ -24,9 +24,21 @@ const images = async (num,key,endpoint) =>{
         const api = new ApiCats(i,URL);
         id[i]= await api.apiCat();
     }
-    return id;
-    
+    return id;   
 }
+
+function colorChange(i){
+    const color_star  = document.getElementById(`color_star${i}`);
+    const colorValue = color_star.style.color;
+    if(colorValue === "white"){
+        color_star.style.color = "yellow";
+        console.log('amarillo');
+    }else{
+        color_star.style.color = "white";
+        console.log('negro');
+    };
+}
+window.colorChange = colorChange;
 
 async function favCats(){
     let num = 0;
@@ -42,28 +54,29 @@ async function favCats(){
     const container = document.getElementById("imagesContainer_1");
     container.innerHTML = html;
 
+    let idFav = [];
     for (let i = 1; i <= num; i++){
         const api = new ApiCats(i,URL);
-        api.apiLoadFav();
-    }    
-    
+        idFav[i-1]= await api.apiLoadFav();
+    }   
+    return idFav; 
 }
-favCats();
-
-
-
-function colorChange(i){
-    const color_star  = document.getElementById(`color_star${i}`);
-    const colorValue = color_star.style.color;
-    if(colorValue === "black"){
-        color_star.style.color = "yellow";
-        console.log('amarillo');
-    }else{
-        color_star.style.color = "black";
-        console.log('negro');
-    };
+let idFavA = await favCats();
+console.log(idFavA);
+async function Delete (i){
+    const idImg = await idFavA[i-1];
+    const endpoint= `favourites/${idImg}`;
+     //call function
+    let imgGen = new ImageGenerator(i,key,endpoint);
+    const URL = imgGen.callApi();
+    console.log(URL);
+    const api = new ApiCats(idImg,URL);
+    await api.deleteApiFav();
+    favCats();
 }
-window.colorChange = colorChange;
+window.Delete = Delete;
+
+
 
 const number = () => {
     let number_images = Number(document.getElementById('number_images').value);
@@ -89,6 +102,8 @@ button_1.onclick = async () => {
             favCats();
         }
         window.saveFav = saveFav;
+
+        
     }else{
         alert("Elija un numero mayor a cero");
     };

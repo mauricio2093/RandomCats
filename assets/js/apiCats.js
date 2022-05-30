@@ -31,21 +31,24 @@ class ApiCats{
     async apiLoadFav(){
         
         try {
-            const resImg = await fetch(this.URL);
-            const data= await resImg.json();
-            console.log(resImg.data);
-            if(this.i === 0){
+            const resImg = await axios(this.URL);
+            const data= resImg.data;
+            const status = resImg.status;
+            console.log(data);
+            if (status !== 200){
+                throw new Error(`Error de petición HTTP en Favorite: ${status}`)
+            }else if(this.i === 0){
                 const num = data.length;
                 return num;
             }else{
+                const imageId= data[this.i-1].id;
                 const imgUrl = data[this.i-1].image.url;
                 const container = document.getElementById(`imgFav${this.i}`);  
                 container.src = imgUrl;
+                return imageId;
             }
-            const status = resImg.status;
-            if (status !== 200){
-                throw new Error(`Error de petición HTTP en Favorite: ${status}`)
-            }
+            
+            
         } catch(error){
             console.log(error);
             console.log(error.message);
@@ -71,6 +74,21 @@ class ApiCats{
             console.log(rest);
             const data = rest.json();
             if (rest.status !== 200) throw new Error(`Error de petición HTTP en Save: ${rest.status}${data.message}`);
+        } catch(error){
+            console.log(error);
+            console.log(error.message);
+            const errorNode = document.querySelector('#error');
+            errorNode.innerText = `Error: ${error.message}`;
+        }
+    }
+
+    async deleteApiFav(){
+        try {                     
+            const rest = await fetch(this.URL,{
+                    method: 'DELETE'
+            });
+            const data = rest.json();
+            if (rest.status !== 200) throw new Error(`Error de petición HTTP en Delete: ${rest.status}${data.message}`);
         } catch(error){
             console.log(error);
             console.log(error.message);

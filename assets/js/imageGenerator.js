@@ -9,7 +9,7 @@ class ImgGenerator{
         let html = '';
         for ( let i = 1; i <= this.num; i++) {
             html += `<img alt="Cat random Picture" class="imagesCat" id="img${i}">
-                    <button type="button" class="favoriteButton" onclick="colorChange(${i});saveFav(${i});"><i style="color:black;" class="ri-star-fill color-star" id="color_star${i}"></i></button>`;
+                    <button type="button" class="favoriteButton" onclick="colorChange(${i});saveFav(${i});"><i style="color:white;" class="ri-star-fill color-star" id="color_star${i}"></i></button>`;
         }
         return html
     }
@@ -17,7 +17,7 @@ class ImgGenerator{
         let html = '';
         for (let i = 1; i <= this.num; i++) {
             html  += `<img alt="Cat random Picture" class="imagesCat" id="imgFav${i}">
-                <button type="reset" class="favoriteButton" onclick="delete(${i})"><i style="color:black;" class="ri-star-fill color-star" id="color_star${i}"></i></button>`;
+                <button type="reset" class="favoriteButton" onclick="Delete(${i})"><i style="color:white;" class="ri-star-fill color-star" id="color_star${i}"></i></button>`;
             const container = document.getElementById("imagesContainer_1");
             container.innerHTML = html;
         }
