@@ -9,6 +9,8 @@ key = key.apiKey();
 // DOM
 const button_1 = document.getElementById('button_1');
 const button_2 = document.getElementById('button_2');
+const upload_btn = document.getElementById('upload_btn');
+
 
 
 //functions
@@ -62,9 +64,10 @@ async function favCats(){
     return idFav; 
 }
 let idFavA = await favCats();
-console.log(idFavA);
+
 async function Delete (i){
     const idImg = await idFavA[i-1];
+    console.log(idImg);
     const endpoint= `favourites/${idImg}`;
      //call function
     let imgGen = new ImageGenerator(i,key,endpoint);
@@ -76,7 +79,19 @@ async function Delete (i){
 }
 window.Delete = Delete;
 
-
+const uploadImage = async () => {
+    const endpoint= `images/upload`;
+     //call function
+    let imgGen = new ImageGenerator('',key,endpoint);
+    const URL = imgGen.callApiNKey();
+    const form = document.getElementById('uploadingForm');
+    const formData = new FormData(form);
+    const api = new ApiCats(formData,URL,key);
+    await api.loadImage();
+    // const apiSave = new ApiCats(idImg,URL);
+    // await apiSave.saveApiFav();
+    favCats();
+};
 
 const number = () => {
     let number_images = Number(document.getElementById('number_images').value);
@@ -115,5 +130,10 @@ button_1.onclick = async () => {
     }
     
 }
+
+upload_btn.onclick = async () =>  uploadImage();
+
+    
+
 
 
